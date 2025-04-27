@@ -25,4 +25,4 @@ jobs:
 
       - name:
         run: |
-          aws s3 cp nodejsapp.zip s3://${{ secrets.S3_BUCKET_NAME }}/artifacts/app-${{ github.run_number }}nodejsapp.zip
+          aws s3 cp nodejsapp.zip s3://${{ secrets.S3_BUCKET_NAME }}/nodejsapp.zip
