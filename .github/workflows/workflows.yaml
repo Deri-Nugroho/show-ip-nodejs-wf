@@ -38,7 +38,7 @@ jobs:
 
       - name: make zip
         run: |
-          zip -r nodejsapp.zip .ebextensions/ index.js package.json package.lock.json playbook.yml
+          zip -r nodejsapp.zip index.js package.json package.lock.json playbook.yml
 
       - name:
         run: |
