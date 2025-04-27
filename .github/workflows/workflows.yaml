@@ -4,24 +4,45 @@ on:
   push:
     branches:
       - main
+      
 jobs:
+  install:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20  # ganti dengan versi Node.js yang kamu pakai
+
+      - name: Install dependencies
+        run: |
+          npm install
+
   build-upload:
     runs-on: ubuntu-latest
     steps:
       - name: cekot repo
         uses: actions/checkout@v3
 
-      - name: make zip
-        run: |
-          zip -r nodejsapp.zip .ebextensions/ index.js package.json package.lock.json playbook.yml
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - name:
-        uses: aws-actions/configure-aws-credentials@v1
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
           aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: make zip
+        run: |
+          zip -r nodejsapp.zip .ebextensions/ index.js package.json package.lock.json playbook.yml
 
       - name:
         run: |
