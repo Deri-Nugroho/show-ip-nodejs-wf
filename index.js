@@ -140,7 +140,7 @@ const server = http.createServer((req, res) => {
   res.end(html);
 });
 
-const port = 5000;
+const port = process.env.PORT || 5000; // <- Ini perubahan penting
 
 server.listen(port, () => {
   console.log(`Server berjalan di http://localhost:${port}`);

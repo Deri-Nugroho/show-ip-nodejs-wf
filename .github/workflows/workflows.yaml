@@ -1,0 +1,27 @@
+name : build and upload to s3
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build-upload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: cekot repo
+        uses: actions/checkout@v3
+
+      - name: make zip
+        run: |
+          zip -r nodejsapp.zip .ebextensions/ index.js package.json package.lock.json playbook.yml
+
+      - name:
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
+
+      - name:
+        run: |
+          aws s3 cp nodejsapp.zip s3://${{ secrets.S3_BUCKET_NAME }}/artifacts/app-${{ github.run_number }}nodejsapp.zip
