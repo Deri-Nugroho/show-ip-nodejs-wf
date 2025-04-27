@@ -28,7 +28,6 @@ jobs:
       - name: cekot repo
         uses: actions/checkout@v3
 
-    steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
